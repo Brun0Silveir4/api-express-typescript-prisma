@@ -16,6 +16,8 @@ router.get('/me', protect, (req, res) => {
 
 router.get('/perfil', protect, async (req, res) => {
   const userId = req.user?.id
+
+  if(!userId) return res.status(400).json({message: "Usuário não encontrado"})
   
   const user = await prisma.user.findUnique({
     where: { id: userId }
